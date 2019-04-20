@@ -37,6 +37,32 @@ A simple blue recliner faces a modest television. The front door lies to the nor
     (FLAGS LIGHTBIT)
 >
 
+<OBJECT TV (DESC "modest television")
+    (SYNONYM TV TELEVISION)
+    (ADJECTIVE MODEST)
+    (IN LIVING-ROOM)
+    (FLAGS NDESCBIT)
+    (ACTION C-TV-R)
+>
+
+<ROUTINE C-TV-R ()
+<COND (<VERB? EXAMINE>
+       <TELL "The television is playing " <PICK-ONE ,TV-SHOWS> CR "You feel like that was a valuable use of a turn and gain 1 point.">
+       <INCREMENT-SCORE 1>)>
+>
+
+<GLOBAL TV-SHOWS
+<LTABLE
+2
+"an advertisement for toothpaste."
+"an advertisement for deodorant."
+"an advertisement for double cheeseburgers."
+"a rousing jingle about feminine hygiene."
+"a promotion for an upcoming program about renovating houses."
+"a distorted image of... something."
+"a chubby baby rolling around in a wet, but incredibly externally dry, diaper.">
+>
+
 <ROOM HALLWAY (DESC "Small Hallway") (IN ROOMS)
     (LDESC "The hallway is extraordinarily narrow. You almost have to sidle sideways to avoid bumping into the small table against the wall.
 The opening to the west leads back into the living room. An opening east leads to the kitchen. A door to the north leads to the bedroom.")
@@ -56,6 +82,12 @@ The opening to the west leads back into the living room. An opening east leads t
     <COND (<VERB? EXAMINE>
            <TELL "The small table is a cheap plywood table that you found on the side of the road one day. The surface is marred and stained, but the utility is unscathed." CR>
            <COND (<AND <FIRST? ,PRSO>> <DESCRIBE-CONTENTS ,PRSO>)>)>
+>
+
+;"============================================================================="
+;" Miscellaneous Routines"
+ <ROUTINE INCREMENT-SCORE (NUM)
+          <SETG SCORE <+ ,SCORE .NUM>>
 >
 
 ;"============================================================================="

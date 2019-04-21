@@ -52,8 +52,7 @@ A simple blue recliner faces a modest television. The front door lies to the nor
        <INCREMENT-SCORE 1>)>
 >
 
-<GLOBAL TV-SHOWS
-<LTABLE
+<GLOBAL TV-SHOWS <LTABLE
 2
 "an advertisement for toothpaste."
 "an advertisement for deodorant."
@@ -61,8 +60,8 @@ A simple blue recliner faces a modest television. The front door lies to the nor
 "a rousing jingle about feminine hygiene."
 "a promotion for an upcoming program about renovating houses."
 "a distorted image of... something."
-"a chubby baby rolling around in a wet, but incredibly externally dry, diaper.">
->
+"a chubby baby rolling around in a wet, but incredibly externally dry, diaper."
+>>
 
 <ROOM HALLWAY (DESC "Small Hallway") (IN ROOMS)
     (LDESC "The hallway is extraordinarily narrow. You almost have to sidle sideways to avoid bumping into the small table against the wall.

@@ -35,6 +35,7 @@ A simple blue recliner faces a modest television. The front door lies to the nor
     (EAST TO HALLWAY)
     (NORTH SORRY "The front door is securely bolted. You wouldn't want to risk inviting bugs inside by opening it, would you?")
     (FLAGS LIGHTBIT)
+    (ACTION FOLLOW-R)
 >
 
 <OBJECT TV (DESC "modest television")
@@ -47,7 +48,7 @@ A simple blue recliner faces a modest television. The front door lies to the nor
 
 <ROUTINE C-TV-R ()
 <COND (<VERB? EXAMINE>
-       <TELL "The television is playing " <PICK-ONE ,TV-SHOWS> CR "You feel like that was a valuable use of a turn and gain 1 point.">
+       <TELL "The television is playing " <PICK-ONE ,TV-SHOWS> CR CR "You feel like that was a valuable use of a turn and gain 1 point.">
        <INCREMENT-SCORE 1>)>
 >
 
@@ -68,6 +69,7 @@ A simple blue recliner faces a modest television. The front door lies to the nor
 The opening to the west leads back into the living room. An opening east leads to the kitchen. A door to the north leads to the bedroom.")
     (WEST TO LIVING-ROOM)
     (FLAGS LIGHTBIT)
+    (ACTION FOLLOW-R)
 >
 
 <OBJECT HALLWAY-TABLE (DESC "small plywood table")
@@ -84,11 +86,31 @@ The opening to the west leads back into the living room. An opening east leads t
            <COND (<AND <FIRST? ,PRSO>> <DESCRIBE-CONTENTS ,PRSO>)>)>
 >
 
+<OBJECT CAT (DESC "tabby cat")
+    (SYNONYM CAT)
+    (ADJECTIVE TABBY)
+    (IN LIVING-ROOM)
+    (FLAGS FEMALEBIT)
+>
+
 ;"============================================================================="
 ;" Miscellaneous Routines"
  <ROUTINE INCREMENT-SCORE (NUM)
-          <SETG SCORE <+ ,SCORE .NUM>>
+    <SETG SCORE <+ ,SCORE .NUM>>
 >
 
+;" Called by every room (tedious), this will cause the cat to follow you."
+<ROUTINE FOLLOW-R (RARG)
+    <COND (<EQUAL? .RARG ,M-ENTER>
+    <MOVE ,CAT ,HERE>
+    <TELL <PICK-ONE-R ,CAT-MSG> CR CR>)>
+>
+
+<GLOBAL CAT-MSG <LTABLE
+"You inadvertently kick the tabby cat several times as it tries to brush against your leg while you walk."
+"The tabby cat follows you into the room."
+"The tabby cat precedes you into the room."
+"The tabby cat rushes into the room before you."
+>>
 ;"============================================================================="
 ;" Verbs and Syntax"

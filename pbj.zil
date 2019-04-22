@@ -82,7 +82,9 @@ The opening to the west leads back into the living room. An opening east leads t
 <ROUTINE HALLWAY-TABLE-R ( )
     <COND (<VERB? EXAMINE>
            <TELL "The small table is a cheap plywood table that you found on the side of the road one day. The surface is marred and stained, but the utility is unscathed." CR>
-           <COND (<AND <FIRST? ,PRSO>> <DESCRIBE-CONTENTS ,PRSO>)>)>
+           <COND (<FIRST? ,PRSO> 
+           <CRLF><DESCRIBE-CONTENTS ,PRSO>)>
+           <RTRUE>)>
 >
 
 <OBJECT CAT (DESC "tabby cat")

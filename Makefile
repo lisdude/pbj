@@ -1,17 +1,16 @@
-VERSION="z6"
+version = .z6
 
-SOURCES=pbj.z6
-ZFILES=$(SOURCES:.zil=.$(VERSION))
-
-all: $(ZFILES)
+src = $(wildcard *.zil)
+obj = $(src:.zil=.zap)
+final = $(src:.zil=$(version))
 
 %.zap: %.zil
 	zilf $<
 
-%.z6: %.zap
+$(final): $(obj)
 	zapf $<
 
-.PHONY: all
+.PHONY: clean
 
 clean:
-	rm *.$(VERSION) ; rm *.zap
+	rm $(final) ; rm *.zap

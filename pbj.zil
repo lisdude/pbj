@@ -4,7 +4,7 @@
 
 ;"============================================================================="
 ;" Game Information and Versioning"
-<VERSION XZIP>              ;"Version 5"
+<VERSION YZIP>              ;"Version 6"
 <FREQUENT-WORDS?>           ;"Save space by generating abbreviations"
 <FUNNY-GLOBALS?>            ;"More than 240 global variables"
 <CONSTANT RELEASEID 1>
@@ -111,5 +111,6 @@ The opening to the west leads back into the living room. An opening east leads t
 "The tabby cat precedes you into the room."
 "The tabby cat rushes into the room before you."
 >>
+
 ;"============================================================================="
 ;" Verbs and Syntax"

@@ -1,6 +1,6 @@
-VERSION="z5"
+VERSION="z6"
 
-SOURCES=pbj.z5
+SOURCES=pbj.z6
 ZFILES=$(SOURCES:.zil=.$(VERSION))
 
 all: $(ZFILES)
@@ -8,7 +8,7 @@ all: $(ZFILES)
 %.zap: %.zil
 	zilf $<
 
-%.z5: %.zap
+%.z6: %.zap
 	zapf $<
 
 .PHONY: all

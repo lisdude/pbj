@@ -7,6 +7,7 @@
 <VERSION YZIP>              ;"Version 6"
 <FREQUENT-WORDS?>           ;"Save space by generating abbreviations"
 <FUNNY-GLOBALS?>            ;"More than 240 global variables"
+<USE "TEMPLATE">
 <CONSTANT RELEASEID 1>
 <CONSTANT GAME-BANNER
 "Peanut Butter and Jelly: The Quest to Make a Sandwich|A basic game to play around in ZIL.|Written by lisdude (lisdude@lisdude.com)">
@@ -28,14 +29,23 @@
     <MAIN-LOOP>>
 
 ;"============================================================================="
+;" Templates"
+
+<OBJECT-TEMPLATE
+    FOLLOW-ROOM =
+        ROOM
+            (ACTION FOLLOW-R)
+            (IN ROOMS)
+>
+
+;"============================================================================="
 ;" Rooms and Objects"
-<ROOM LIVING-ROOM (DESC "Living Room") (IN ROOMS)
+<FOLLOW-ROOM LIVING-ROOM (DESC "Living Room")
     (LDESC "You're standing in the small, but certainly cozy, living room of your home. Being a stark minimalist, there is not much in the way of decoration.
 A simple blue recliner faces a modest television. The front door lies to the north and a small hallway to the east.")
     (EAST TO HALLWAY)
     (NORTH SORRY "The front door is securely bolted. You wouldn't want to risk inviting bugs inside by opening it, would you?")
     (FLAGS LIGHTBIT)
-    (ACTION FOLLOW-R)
 >
 
 <OBJECT TV (DESC "modest television")
@@ -63,12 +73,11 @@ A simple blue recliner faces a modest television. The front door lies to the nor
 "a chubby baby rolling around in a wet, but incredibly externally dry, diaper."
 >>
 
-<ROOM HALLWAY (DESC "Small Hallway") (IN ROOMS)
+<FOLLOW-ROOM HALLWAY (DESC "Small Hallway")
     (LDESC "The hallway is extraordinarily narrow. You almost have to sidle sideways to avoid bumping into the small table against the wall.
 The opening to the west leads back into the living room. An opening east leads to the kitchen. A door to the north leads to the bedroom.")
     (WEST TO LIVING-ROOM)
     (FLAGS LIGHTBIT)
-    (ACTION FOLLOW-R)
 >
 
 <OBJECT HALLWAY-TABLE (DESC "small plywood table")
@@ -100,7 +109,7 @@ The opening to the west leads back into the living room. An opening east leads t
     <SETG SCORE <+ ,SCORE .NUM>>
 >
 
-;" Called by every room (tedious), this will cause the cat to follow you."
+;" The default action for the FOLLOW-ROOM, this will cause the cat to follow you."
 <ROUTINE FOLLOW-R (RARG)
     <COND (<EQUAL? .RARG ,M-ENTER>
     <MOVE ,CAT ,HERE>

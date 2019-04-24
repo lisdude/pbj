@@ -30,7 +30,6 @@
 
 ;"============================================================================="
 ;" Templates"
-
 <OBJECT-TEMPLATE
     FOLLOW-ROOM =
         ROOM
@@ -84,7 +83,7 @@ The opening to the west leads back into the living room. An opening east leads t
     (SYNONYM TABLE)
     (ADJECTIVE SMALL PLYWOOD)
     (IN HALLWAY)
-    (FLAGS CONTBIT SURFACEBIT OPENBIT NDESCBIT)
+    (FLAGS CONTBIT SURFACEBIT OPENBIT NDESCBIT SEARCHBIT)
     (ACTION HALLWAY-TABLE-R)
 >
 
@@ -96,11 +95,32 @@ The opening to the west leads back into the living room. An opening east leads t
            <RTRUE>)>
 >
 
+<OBJECT CAT-FOOD (DESC "bag of Fresh Kill Cat Chow")
+    (SYNONYM FRESH KILL CHOW)
+    (IN HALLWAY-TABLE)
+    (VALUE 5)
+    (FLAGS TAKEBIT)
+>
+
 <OBJECT CAT (DESC "tabby cat")
     (SYNONYM CAT)
     (ADJECTIVE TABBY)
     (IN LIVING-ROOM)
     (FLAGS FEMALEBIT)
+>
+
+<GLOBAL CAT-FED <>>
+<SYNTAX FEED OBJECT TO OBJECT = V-FEED>
+
+<ROUTINE V-FEED ()
+    <COND (<EQUAL? ,PRSI ,CAT>
+           <COND (<EQUAL? ,PRSO ,CAT-FOOD>
+                  <TELL "The tabby cat gratefully shoves her head into " A ,PRSO ". The bag shakes, rattles, and crunches as the food is crushed by the feline's sharp teeth. When she's had her fill, the cat lifts her head from the bag and rubs her head against your leg." CR>
+                  <REMOVE ,CAT-FOOD>
+                  <SETG ,CAT-FED T>
+                  <INCREMENT-SCORE 5>)
+                 (ELSE <TELL "The cat sniffs tentatively at " A ,PRSO " before deciding that it's not at all worth her time." CR>)>)
+          (ELSE <TELL D ,PRSI " doesn't seem interested in eating " A ,PRSO "." CR>)>
 >
 
 ;"============================================================================="
@@ -111,7 +131,7 @@ The opening to the west leads back into the living room. An opening east leads t
 
 ;" The default action for the FOLLOW-ROOM, this will cause the cat to follow you."
 <ROUTINE FOLLOW-R (RARG)
-    <COND (<EQUAL? .RARG ,M-ENTER>
+    <COND (<AND <EQUAL? .RARG ,M-ENTER> ,CAT-FED>
     <MOVE ,CAT ,HERE>
     <TELL <PICK-ONE-R ,CAT-MSG> CR CR>)>
 >

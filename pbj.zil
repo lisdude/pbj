@@ -142,6 +142,3 @@ The opening to the west leads back into the living room. An opening east leads t
 "The tabby cat precedes you into the room."
 "The tabby cat rushes into the room before you."
 >>
-
-;"============================================================================="
-;" Verbs and Syntax"

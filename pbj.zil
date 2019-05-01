@@ -111,21 +111,17 @@ The opening to the west leads back into the living room. An opening east leads t
     (ADJECTIVE TABBY)
     (IN LIVING-ROOM)
     (FLAGS FEMALEBIT)
-    (ACTION CAT-TEST-R)
+    (ACTION CAT-R)
 >
 
-; " Test exit shenanigans with the cat for eventual random movement."
-<ROUTINE CAT-TEST-R ()
-<COND (<EXIT-EXISTS <META-LOC ,CAT> ,P?EAST>
-<TELL "WOW THE EXIT EXISTS" CR>)
-(ELSE
-<TELL "OH NO THE EXIT DOES NOT EXIST" CR>)>
-<TELL "CAT DEBUG: " D <GETP LIVING-ROOM ,P?EAST> CR>
-<TELL "RANDOM EXIT: " D <GETP LIVING-ROOM <RANDOM-EXIT <META-LOC ,CAT>>> CR>
+<ROUTINE CAT-R ()
+    <COND (<VERB? EXAMINE>
+            <TELL "This small critter has a thick, fluffy coat of dark lines, dots, stripes, and swirling patterns atop a smattering of light brown. There is a distinctive 'M' on her forehead." CR>)
+          (<VERB? ATTACK>
+            <TELL "Perish the thought! While small, the cat has razor sharp claws and dagger-like teeth. She is also adept in the art of stealing hearts with preciousness." CR>)>
 >
 
 <GLOBAL CAT-FED <>>
-<SYNTAX FEED OBJECT TO OBJECT = V-FEED>
 
 <ROUTINE V-FEED ()
     <COND (<EQUAL? ,PRSI ,CAT>
@@ -137,6 +133,14 @@ The opening to the west leads back into the living room. An opening east leads t
                   <INCREMENT-SCORE 5>)
                  (ELSE <TELL "The cat sniffs tentatively at " A ,PRSO " before deciding that it's not at all worth her time." CR>)>)
           (ELSE <TELL D ,PRSI " doesn't seem interested in eating " A ,PRSO "." CR>)>
+>
+
+<ROUTINE V-PET ()
+    <COND (<==? ,PRSO ,CAT>
+            <TELL "You pet the cat gently on the head and are rewarded with a deep purr. Oh, and a point." CR>
+            <INCREMENT-SCORE 1>)
+          (ELSE <TELL "You gently pet " D ,PRSI ". You definitely don't feel foolish." CR>)
+    >
 >
 
 ;"============================================================================="
@@ -173,14 +177,6 @@ The opening to the west leads back into the living room. An opening east leads t
         <MOVE ,CAT .NEW-ROOM>)>                                     ; "Move the cat into the new room."
 >
 
-; "Return true if there is an exit (EXT) defined in room (RM)"
-<ROUTINE EXIT-EXISTS (RM EXT)
-<COND (<EQUAL? <GETP .RM .EXT> <>>
-        <RFALSE>)
-(ELSE 
-        <RTRUE>)>
->
-
 ; "When provided a room object, return either a random exit property or FALSE if no useful exits are found."
 ; "RM: Room Object. EXT: Exit being checked. COUNT: Loop iterations. PT: Pointer to exit property. RND-EXIT: The random chosen exit."
 <ROUTINE RANDOM-EXIT (RM "AUX" EXT COUNT PT RND-EXIT)
@@ -205,3 +201,8 @@ The opening to the west leads back into the living room. An opening east leads t
           (<==? <PTSIZE .PT> ,UEXIT>    ; "If the property size matches the size of an exit, we're done."
             <RTRUE>)>
 >
+
+;"============================================================================="
+;" Syntax"
+<SYNTAX FEED OBJECT TO OBJECT = V-FEED>
+<SYNTAX PET OBJECT = V-PET>
